@@ -9,19 +9,26 @@
     "node": ">=22"
   },
   "scripts": {
-    "dev": "npm run dev:api & npm run dev:admin & npm run dev:pos",
+    "dev": "npm run dev:api & npm run dev:admin & npm run dev:platform & npm run dev:pos",
     "dev:api": "npm -w apps/api run start:dev",
     "dev:admin": "npm -w apps/admin-web run dev",
+    "dev:platform": "npm -w apps/platform-web run dev",
     "dev:pos": "npm -w apps/pos-desktop run dev",
-    "build": "npm run build:api && npm run build:admin && npm run build:pos",
+
+    "build": "npm run build:api && npm run build:admin && npm run build:platform && npm run build:pos",
     "build:api": "npm -w apps/api run build",
     "build:admin": "npm -w apps/admin-web run build",
+    "build:platform": "npm -w apps/platform-web run build",
     "build:pos": "npm -w apps/pos-desktop run build",
-    "lint": "npm run lint:api && npm run lint:admin && npm run lint:pos",
+
+    "lint": "npm run lint:api && npm run lint:admin && npm run lint:platform && npm run lint:pos",
     "lint:api": "npm -w apps/api run lint",
     "lint:admin": "npm -w apps/admin-web run lint",
+    "lint:platform": "npm -w apps/platform-web run lint",
     "lint:pos": "npm -w apps/pos-desktop run lint",
+
     "format": "prettier -w .",
+
     "db:up": "docker compose up -d",
     "db:down": "docker compose down",
     "db:logs": "docker compose logs -f --tail=200",
