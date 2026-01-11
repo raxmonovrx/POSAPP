@@ -1,0 +1,32 @@
+# deps
+node_modules
+**/node_modules
+
+# env
+.env
+.env.*.local
+
+# build
+dist
+build
+out
+coverage
+.tmp
+.cache
+.turbo
+.nx
+.eslintcache
+
+# logs
+*.log
+
+# OS
+.DS_Store
+
+# env
+.env
+**/.env
+
+# build
+dist
+**/dist

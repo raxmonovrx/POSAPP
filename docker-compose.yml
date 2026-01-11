@@ -1,0 +1,46 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: posapp-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-posapp}
+      MYSQL_USER: ${MYSQL_USER:-posapp}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-posapp}
+      TZ: ${TZ:-UTC}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - posapp_mysql_data:/var/lib/mysql
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-time-zone=+00:00
+
+  redis:
+    image: redis:7-alpine
+    container_name: posapp-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - posapp_redis_data:/data
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: posapp-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 0
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+
+volumes:
+  posapp_mysql_data:
+  posapp_redis_data:

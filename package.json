@@ -1,0 +1,33 @@
+{
+  "name": "posapp",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "npm run dev:api & npm run dev:admin & npm run dev:pos",
+    "dev:api": "npm -w apps/api run start:dev",
+    "dev:admin": "npm -w apps/admin-web run dev",
+    "dev:pos": "npm -w apps/pos-desktop run dev",
+    "build": "npm run build:api && npm run build:admin && npm run build:pos",
+    "build:api": "npm -w apps/api run build",
+    "build:admin": "npm -w apps/admin-web run build",
+    "build:pos": "npm -w apps/pos-desktop run build",
+    "lint": "npm run lint:api && npm run lint:admin && npm run lint:pos",
+    "lint:api": "npm -w apps/api run lint",
+    "lint:admin": "npm -w apps/admin-web run lint",
+    "lint:pos": "npm -w apps/pos-desktop run lint",
+    "format": "prettier -w .",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f --tail=200",
+    "db:reset": "docker compose down -v && docker compose up -d"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2"
+  }
+}
