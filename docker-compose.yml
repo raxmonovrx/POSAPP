@@ -10,7 +10,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-posapp}
       TZ: ${TZ:-UTC}
     ports:
-      - "${MYSQL_PORT:-3306}:3306"
+      - '${MYSQL_PORT:-3306}:3306'
     volumes:
       - posapp_mysql_data:/var/lib/mysql
     command: >
@@ -23,7 +23,7 @@ services:
     container_name: posapp-redis
     restart: unless-stopped
     ports:
-      - "${REDIS_PORT:-6379}:6379"
+      - '${REDIS_PORT:-6379}:6379'
     volumes:
       - posapp_redis_data:/data
 
@@ -37,7 +37,7 @@ services:
       PMA_ARBITRARY: 0
       UPLOAD_LIMIT: 64M
     ports:
-      - "8081:80"
+      - '8081:80'
     depends_on:
       - mysql
 

@@ -4,6 +4,9 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import basicAuth from 'express-basic-auth';
 import { AppModule } from './app.module';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { WrapResponseInterceptor } from './common/interceptors/wrap-response.interceptor';
+import { TraceIdMiddleware } from './common/middleware/trace-id.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,6 +19,9 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.use(new TraceIdMiddleware().use);
+  app.useGlobalInterceptors(new WrapResponseInterceptor());
+  app.useGlobalFilters(new AllExceptionsFilter());
 
   const isProd = process.env.NODE_ENV === 'production';
   const swaggerFlag = config.get<string>('SWAGGER_ENABLED') === 'true';
